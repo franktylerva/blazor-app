@@ -21,6 +21,8 @@ spec:
     - name: BP_DOTNET_PUBLISH_FLAGS
       value: "--self-contained=true"
   params:
+  - name: live-update
+      value: "true"
   - name: annotations
     value:
       autoscaling.knative.dev/minScale: "1"
