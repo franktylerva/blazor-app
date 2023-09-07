@@ -22,7 +22,7 @@ spec:
       value: "--self-contained=true"
   params:
   - name: live-update
-      value: "true"
+    value: "true"
   - name: annotations
     value:
       autoscaling.knative.dev/minScale: "1"
