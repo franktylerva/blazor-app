@@ -2,9 +2,9 @@ using System.Data.Common;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage;
-using RestService.Models;
+using BlazorApp.Models;
 
-namespace RestService;
+namespace BlazorApp;
 
 internal sealed class PostgreSqlSeeder
 {
@@ -14,7 +14,7 @@ internal sealed class PostgreSqlSeeder
 
         try
         {
-            await using var dbContext = scope.ServiceProvider.GetRequiredService<CustomerProfilesContext>();
+            await using var dbContext = scope.ServiceProvider.GetRequiredService<BlazorAppContext>();
 
             await DropCreateTablesAsync(dbContext);
             await InsertSampleDataAsync(dbContext);
@@ -50,14 +50,14 @@ internal sealed class PostgreSqlSeeder
         await dbContext.Database.ExecuteSqlRawAsync(sqlStatement);
     }
 
-    private static async Task InsertSampleDataAsync(CustomerProfilesContext dbContext)
+    private static async Task InsertSampleDataAsync(BlazorAppContext dbContext)
     {
-        dbContext.CustomerProfiles.AddRange(
-            new CustomerProfile { FirstName = "John", LastName = "Doe", Email = "john@doe.com" },
-            new CustomerProfile { FirstName = "Bill", LastName = "Doe", Email = "bill@doe.com" },
-            new CustomerProfile { FirstName = "Mary", LastName = "Edwards", Email = "medwards@gmail.com" },
-            new CustomerProfile { FirstName = "Jack", LastName = "Rogers", Email = "jrogers@gmail.com" },
-            new CustomerProfile { FirstName = "Jane", LastName = "Doe", Email = "jane@doe.com" });
+        dbContext.Contacts.AddRange(
+            new Contact { FirstName = "John", LastName = "Doe", Email = "john@doe.com" },
+            new Contact { FirstName = "Bill", LastName = "Doe", Email = "bill@doe.com" },
+            new Contact { FirstName = "Mary", LastName = "Edwards", Email = "medwards@gmail.com" },
+            new Contact { FirstName = "Jack", LastName = "Rogers", Email = "jrogers@gmail.com" },
+            new Contact { FirstName = "Jane", LastName = "Doe", Email = "jane@doe.com" });
 
         await dbContext.SaveChangesAsync();
     }

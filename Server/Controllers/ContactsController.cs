@@ -1,51 +1,51 @@
+using BlazorApp.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using RestService.Models;
 
 namespace RestService.Controllers;
 
-[Route("api/customers")]
+[Route("api/contacts")]
 [ApiController]
 public class CustomerProfilesController : ControllerBase
 {
-    private readonly CustomerProfilesContext _context;
+    private readonly BlazorAppContext _context;
 
     private readonly ILogger<CustomerProfilesController> _logger;
 
-    public CustomerProfilesController(CustomerProfilesContext context, ILogger<CustomerProfilesController> logger)
+    public CustomerProfilesController(BlazorAppContext context, ILogger<CustomerProfilesController> logger)
     {
         _context = context;
         _logger = logger;
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<CustomerProfile>>> GetCustomerProfiles()
+    public async Task<ActionResult<IEnumerable<Contact>>> GetCustomerProfiles()
     {
-        return await _context.CustomerProfiles.ToListAsync();
+        return await _context.Contacts.ToListAsync();
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<CustomerProfile>> GetCustomerProfile(string id)
+    public async Task<ActionResult<Contact>> GetCustomerProfile(string id)
     {
-        var customerProfile = await _context.CustomerProfiles.FindAsync(id);
+        var contact = await _context.Contacts.FindAsync(id);
 
-        if (customerProfile == null)
+        if (contact == null)
         {
             return NotFound();
         }
 
-        return customerProfile;
+        return contact;
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> PutCustomerProfile(string id, CustomerProfile customerProfile)
+    public async Task<IActionResult> PutCustomerProfile(string id, Contact contact)
     {
-        if (id != customerProfile.Id)
+        if (id != contact.Id)
         {
             return BadRequest();
         }
 
-        _context.Entry(customerProfile).State = EntityState.Modified;
+        _context.Entry(contact).State = EntityState.Modified;
 
         try
         {
@@ -68,9 +68,9 @@ public class CustomerProfilesController : ControllerBase
 
 
     [HttpPost]
-    public async Task<ActionResult<CustomerProfile>> PostCustomerProfile(CustomerProfile customerProfile)
+    public async Task<ActionResult<Contact>> PostCustomerProfile(Contact customerProfile)
     {
-        _context.CustomerProfiles.Add(customerProfile);
+        _context.Contacts.Add(customerProfile);
         await _context.SaveChangesAsync();
 
         return CreatedAtAction("GetCustomerProfile", new { id = customerProfile.Id }, customerProfile);
@@ -79,13 +79,13 @@ public class CustomerProfilesController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteCustomerProfile(string id)
     {
-        var customerProfile = await _context.CustomerProfiles.FindAsync(id);
-        if (customerProfile == null)
+        var contact = await _context.Contacts.FindAsync(id);
+        if (contact == null)
         {
             return NotFound();
         }
 
-        _context.CustomerProfiles.Remove(customerProfile);
+        _context.Contacts.Remove(contact);
         await _context.SaveChangesAsync();
 
         return NoContent();
@@ -93,6 +93,6 @@ public class CustomerProfilesController : ControllerBase
 
     private bool CustomerProfileExists(string id)
     {
-        return _context.CustomerProfiles.Any(e => e.Id == id);
+        return _context.Contacts.Any(e => e.Id == id);
     }
 }

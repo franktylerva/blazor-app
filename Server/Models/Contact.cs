@@ -1,10 +1,10 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace RestService.Models;
+namespace BlazorApp.Models;
 
-[Table("CustomerProfiles")]
-public class CustomerProfile
+[Table("Contacts")]
+public class Contact
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

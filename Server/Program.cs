@@ -1,6 +1,6 @@
+using BlazorApp.Models;
 using Microsoft.AspNetCore.ResponseCompression;
-using RestService;
-using RestService.Models;
+using BlazorApp;
 using Steeltoe.Connector.PostgreSql;
 using Steeltoe.Connector.PostgreSql.EFCore;
 using Steeltoe.Extensions.Configuration.Kubernetes.ServiceBinding;
@@ -10,7 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Configuration.AddKubernetesServiceBindings();
-builder.Services.AddDbContext<CustomerProfilesContext>((services, options) => options.UseNpgsql(builder.Configuration));
+builder.Services.AddDbContext<BlazorAppContext>((services, options) => options.UseNpgsql(builder.Configuration));
 builder.Services.AddPostgresHealthContributor(builder.Configuration);
 
 builder.Services.AddControllersWithViews();
